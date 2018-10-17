@@ -11,9 +11,18 @@ namespace Homeify.Server.Controllers
     {
         // GET api/devices
         [HttpGet]
-        public ActionResult<IEnumerable<Device>> Get()
+        public ActionResult<IEnumerable<Device>> ListDevices()
         {
+            var bluetoothInterop = new BluetoothlibInterop();
+            bluetoothInterop.ListDevices();
             return new[] {new Device("D3:19:C8:89:F9:42", "TestDevice", DateTime.Now, BluetoothStatus.Unknown)};
+        }
+
+        // PUT api/devices/{macAddress}
+        [HttpPut("{macAddress}")]
+        public ActionResult<Device> UpdateDevice(string macAddress, [FromBody] Device device)
+        {
+            return NoContent();
         }
     }
 }
